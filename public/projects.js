@@ -12,15 +12,39 @@ const projectsPerPage = 9;
 
 // Theme management
 function initTheme() {
+    // Wait for DOM to be ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeTheme();
+        });
+    } else {
+        initializeTheme();
+    }
+}
+
+function initializeTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
     setupThemeToggle();
 }
 
 function setTheme(theme) {
+    // Force theme application
     document.documentElement.setAttribute('data-theme', theme);
+    
+    // Also add class for additional specificity
+    document.body.className = document.body.className.replace(/theme-\w+/g, '') + ` theme-${theme}`;
+    
+    // Store preference
     localStorage.setItem('theme', theme);
+    
+    // Update icon
     updateThemeIcon(theme);
+    
+    // Force repaint to ensure theme applies
+    document.body.style.display = 'none';
+    document.body.offsetHeight; // Force reflow
+    document.body.style.display = '';
 }
 
 function toggleTheme() {
@@ -39,7 +63,13 @@ function updateThemeIcon(theme) {
 function setupThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
-        themeToggle.addEventListener('click', toggleTheme);
+        // Remove existing listeners to prevent duplicates
+        themeToggle.replaceWith(themeToggle.cloneNode(true));
+        const newToggle = document.getElementById('themeToggle');
+        newToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleTheme();
+        });
     }
 }
 
