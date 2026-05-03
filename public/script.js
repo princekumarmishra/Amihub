@@ -35,6 +35,57 @@ function setTheme(theme) {
     // Also add class for additional specificity
     document.body.className = document.body.className.replace(/theme-\w+/g, '') + ` theme-${theme}`;
     
+    // Force text colors in dark mode
+    if (theme === 'dark') {
+        document.body.style.color = '#ffffff';
+        document.body.style.backgroundColor = '#1a1a1a';
+        
+        // Apply text colors to all elements
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(el => {
+            if (el.children.length === 0 && el.textContent.trim()) {
+                el.style.color = '#ffffff';
+            }
+        });
+        
+        // Specific element fixes
+        const textElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, div, a, li');
+        textElements.forEach(el => {
+            el.style.color = '#ffffff';
+        });
+        
+        // Card fixes
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.style.backgroundColor = '#2d2d2d';
+            card.style.color = '#ffffff';
+        });
+        
+        // Navbar fixes
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            navbar.style.backgroundColor = '#1a1a1a';
+            navbar.style.color = '#ffffff';
+        }
+        
+        // Form fixes
+        const forms = document.querySelectorAll('.form-control');
+        forms.forEach(form => {
+            form.style.backgroundColor = '#2d2d2d';
+            form.style.color = '#ffffff';
+            form.style.borderColor = '#404040';
+        });
+    } else {
+        // Reset to light mode
+        document.body.style.color = '';
+        document.body.style.backgroundColor = '';
+        
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(el => {
+            el.style.color = '';
+        });
+    }
+    
     // Store preference
     localStorage.setItem('theme', theme);
     
