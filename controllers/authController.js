@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { firebaseHelpers } = require('../firebase');
+const { firebaseHelpers } = require('../firebase-vercel');
 
 // Generate JWT
 const generateToken = (uid) => {

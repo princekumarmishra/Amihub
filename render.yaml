@@ -1,0 +1,26 @@
+services:
+  # Web Service
+  - type: web
+    name: amihub-web
+    env: node
+    repo: https://github.com/princekumarmishra/Amihub.git
+    rootDir: .
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        value: supersecretamitykey123
+      - key: FIREBASE_PROJECT_ID
+        value: amihub-e8153
+      - key: FIREBASE_CLIENT_EMAIL
+        value: firebase-adminsdk-xxxxx@amihub-e8153.iam.gserviceaccount.com
+      - key: FIREBASE_PRIVATE_KEY
+        value: "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY_HERE\n-----END PRIVATE KEY-----\n"
+    autoDeploy: yes
+    healthCheckPath: /
+    healthCheckTimeout: 10000

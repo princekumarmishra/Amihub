@@ -1,4 +1,4 @@
-const { firebaseHelpers } = require('../firebase');
+const { firebaseHelpers } = require('../firebase-vercel');
 
 // @desc    Get all reviews
 // @route   GET /api/reviews

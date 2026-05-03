@@ -1,4 +1,4 @@
-const { firebaseHelpers } = require('../firebase');
+const { firebaseHelpers } = require('../firebase-vercel');
 
 // @desc    Create a new project
 // @route   POST /api/projects
