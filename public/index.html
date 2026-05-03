@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amihub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage-compat.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
+                <img src="logo.png" alt="Amihub Logo" class="logo me-2" height="30" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <i class="fas fa-lightbulb me-2" style="display: none;"></i>
+                Amihub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="projects.html">Projects</a>
+                    </li>
+                    <li class="nav-item d-none" id="dashboardNavItem">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                </ul>
+                
+                <!-- Theme Toggle -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button class="nav-link" id="themeToggle" title="Toggle theme">
+                            <i class="fas fa-moon" id="themeIcon"></i>
+                        </button>
+                    </li>
+                </ul>
+                
+                <!-- Demo Button -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button class="btn btn-outline-light btn-sm" id="demoBtn" onclick="startDemo()">
+                            <i class="fas fa-play me-1"></i>Try Demo
+                        </button>
+                    </li>
+                </ul>
+                
+                <!-- Sign In Dropdown -->
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown" id="signInDropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-sign-in-alt me-1"></i>Sign In
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="login.html?role=student">
+                                <i class="fas fa-graduation-cap me-2"></i>Student Login
+                            </a></li>
+                            <li><a class="dropdown-item" href="login.html?role=mentor">
+                                <i class="fas fa-chalkboard-teacher me-2"></i>Mentor Login
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="register.html">
+                                <i class="fas fa-user-plus me-2"></i>Create Account
+                            </a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- User Menu (shown when logged in) -->
+                    <li class="nav-item dropdown d-none" id="userDropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdownLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user me-1"></i><span id="userNameDisplay">User</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownLink">
+                            <li><a class="dropdown-item" href="dashboard.html">
+                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                            </a></li>
+                            <li><a class="dropdown-item" href="profile.html">
+                                <i class="fas fa-user me-2"></i>Profile
+                            </a></li>
+                            <li><a class="dropdown-item" href="settings.html">
+                                <i class="fas fa-cog me-2"></i>Settings
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutLink">
+                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-white text-center py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="mb-4">
+                        <img src="logo.png" alt="Amihub Logo" class="hero-logo" height="80" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                        <i class="fas fa-lightbulb fa-5x" style="display: none; color: white;"></i>
+                    </div>
+                    <h1 class="display-3 fw-bold mb-4">Welcome to Amihub</h1>
+                    <p class="lead mb-4">Connect, Collaborate, and Innovate with Amity's brightest minds</p>
+                    <div class="d-flex gap-3 justify-content-center">
+                        <a href="projects.html" class="btn btn-light btn-lg">Explore Projects</a>
+                        <a href="login.html" class="btn btn-outline-light btn-lg">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Why Join Innovation Hub?</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-users fa-3x text-primary"></i>
+                        </div>
+                        <h4>Connect</h4>
+                        <p>Network with talented students, mentors, and industry experts</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-rocket fa-3x text-success"></i>
+                        </div>
+                        <h4>Innovate</h4>
+                        <p>Turn your ideas into reality with cutting-edge resources</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-trophy fa-3x text-warning"></i>
+                        </div>
+                        <h4>Achieve</h4>
+                        <p>Showcase your projects and get recognized for your work</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Projects -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Featured Projects</h2>
+            <div class="row g-4" id="featuredProjects">
+                <!-- Projects will be loaded here -->
+            </div>
+            <div class="text-center mt-4">
+                <a href="projects.html" class="btn btn-primary">View All Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3 mb-3">
+                    <h3 class="display-6 fw-bold" id="totalProjects">0</h3>
+                    <p>Projects</p>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h3 class="display-6 fw-bold" id="totalUsers">0</h3>
+                    <p>Users</p>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h3 class="display-6 fw-bold" id="totalMentors">0</h3>
+                    <p>Mentors</p>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h3 class="display-6 fw-bold" id="totalReviews">0</h3>
+                    <p>Reviews</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="logo.png" alt="Amihub Logo" class="footer-logo me-2" height="30" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                        <i class="fas fa-lightbulb me-2" style="display: none;"></i>
+                        <h5 class="mb-0">Amihub</h5>
+                    </div>
+                    <p>Empowering student entrepreneurship and innovation</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 Amihub. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="firebase-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
